@@ -4,6 +4,8 @@
 
 This simple plugin inserts a slider into your note to serve as a great visualisation tool!
 
+![](/screenshots/demo.gif)
+
 # Usage
 
 Type `/Insert slider` and that's it! In order to customise the range of the slider, simply add a value to the end of the block where in the example below, 100 is the maximum range (default: 10).
