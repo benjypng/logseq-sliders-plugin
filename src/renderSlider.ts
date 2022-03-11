@@ -40,7 +40,6 @@ export const renderSlider = (id: string) => {
             top?.document
                 .getElementById(id)
                 .addEventListener("input", async (e: any) => {
-                    console.log(this.uuid);
                     await logseq.Editor.upsertBlockProperty(
                         this.uuid,
                         "value",
