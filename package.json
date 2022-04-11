@@ -20,6 +20,6 @@
     "logseq": {
         "id": "logseq-sliders-plugin",
         "title": "logseq-sliders-plugin",
-        "icon": ""
+        "icon": "./icon.svg"
     }
 }
