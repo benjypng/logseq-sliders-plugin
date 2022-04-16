@@ -20,7 +20,7 @@ In order to customise the range of the slider, simply add a value to the end of 
 
 By default, sliders will have their values shown. If you wish to hide it, simply head to the plugin settings, and check the box to hide it.
 
-![](screenshots/settings.png)
+![](screenshots/settings.png){width: 200}
 
 # Changing the colours of the track and the thumb
 
