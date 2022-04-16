@@ -8,9 +8,23 @@ This simple plugin inserts a slider into your note to serve as a great visualisa
 
 # Usage
 
-Type `/Insert slider` and that's it! In order to customise the range of the slider, simply add a value to the end of the block where in the example below, 100 is the maximum range (default: 10).
+Type `/Insert slider` and that's it!
+
+# Customising range
+
+In order to customise the range of the slider, simply add a value to the end of the block where in the example below, 100 is the maximum range (default: 10).
 
 `[:div {:is "slider-jlvafjj"}100]`
+
+# Hiding the values of the slider rangers
+
+By default, sliders will have their values shown. If you wish to hide it, simply head to the plugin settings, and check the box to hide it.
+
+![](screenshots/settings.png)
+
+# Changing the colours of the track and the thumb
+
+In the same settings box above, you can also change the colours of the track and the thumb of your sliders.
 
 # Installation
 
