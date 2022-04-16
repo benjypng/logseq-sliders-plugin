@@ -1,21 +1,23 @@
 import "@logseq/libs";
+import { callSettings } from "./callSettings";
 import { renderSlider } from "./renderSlider";
+
 const main = () => {
-    console.log("logseq-sliders-plugin loaded");
+  console.log("logseq-sliders-plugin loaded");
 
-    // Generate unique identifier
-    const uniqueIdentifier = () =>
-        Math.random()
-            .toString(36)
-            .replace(/[^a-z]+/g, "");
+  callSettings();
 
-    logseq.Editor.registerSlashCommand("Insert slider", async () => {
-        const id = uniqueIdentifier();
-        await logseq.Editor.insertAtEditingCursor(
-            `[:div {:is "slider-${id}"}]`
-        );
+  // Generate unique identifier
+  const uniqueIdentifier = () =>
+    Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, "");
 
-        renderSlider(id);
-    });
+  logseq.Editor.registerSlashCommand("Insert slider", async () => {
+    const id = uniqueIdentifier();
+    await logseq.Editor.insertAtEditingCursor(`[:div {:is "slider-${id}"}]`);
+
+    renderSlider(id);
+  });
 };
 logseq.ready(main).catch(console.error);

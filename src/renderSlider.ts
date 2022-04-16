@@ -1,4 +1,5 @@
 import "@logseq/libs";
+import { sliderStyle } from "./sliderStyle";
 
 declare global {
   interface Window {
@@ -22,6 +23,7 @@ export const renderSlider = (id: string) => {
 
     async connectedCallback() {
       this.render();
+      logseq.provideStyle(sliderStyle(this.uuid));
     }
 
     async render() {
@@ -34,7 +36,7 @@ export const renderSlider = (id: string) => {
         blk.content.indexOf('"}') + 2,
         blk.content.indexOf("]")
       );
-      this.innerHTML = `<input tabindex="-1" id=${id} type="range" min="0" max=${
+      this.innerHTML = `<input class="sliderLS" tabindex="-1" id=${id} type="range" min="0" max=${
         !params ? 10 : params
       } value=${rangeValue} />`;
       top?.document
@@ -56,6 +58,7 @@ export const renderSlider = (id: string) => {
       );
     }
   }
+
   if (!top?.customElements.get(NAME)) {
     top?.customElements.define(NAME, Slider, {
       extends: "div",
