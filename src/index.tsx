@@ -15,7 +15,7 @@ const main = () => {
 
   logseq.Editor.registerSlashCommand("Insert slider", async () => {
     const id = uniqueIdentifier();
-    await logseq.Editor.insertAtEditingCursor(`[:div {:is "slider-${id}"}]`);
+    await logseq.Editor.insertAtEditingCursor(`[:span {:is "slider-${id}"}]`);
 
     renderSlider(id);
   });

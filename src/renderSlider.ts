@@ -3,12 +3,12 @@ import { sliderStyle } from "./sliderStyle";
 
 declare global {
   interface Window {
-    HTMLDivElement: any;
+    HTMLSpanElement: any;
   }
 }
 
 export const renderSlider = (id: string) => {
-  const HTMLDivEl: typeof HTMLDivElement = top?.HTMLDivElement;
+  const HTMLDivEl: typeof HTMLSpanElement = top?.HTMLSpanElement;
 
   const NAME = `slider-${id}`;
 
@@ -61,7 +61,7 @@ export const renderSlider = (id: string) => {
 
   if (!top?.customElements.get(NAME)) {
     top?.customElements.define(NAME, Slider, {
-      extends: "div",
+      extends: "span",
     });
   }
 };
