@@ -1,4 +1,3 @@
-import "@logseq/libs";
 import { sliderStyle } from "./sliderStyle";
 
 declare global {
@@ -7,10 +6,10 @@ declare global {
   }
 }
 
-export const renderSlider = (id: string) => {
+export const renderSlider = (uniqueIdentifier: string) => {
   const HTMLDivEl: typeof HTMLSpanElement = top?.HTMLSpanElement;
 
-  const NAME = `slider-${id}`;
+  const NAME = `slider-${uniqueIdentifier}`;
 
   class Slider extends HTMLDivEl {
     constructor() {
@@ -18,12 +17,12 @@ export const renderSlider = (id: string) => {
     }
 
     static get observedAttributes() {
-      return ["data-latex", "data-uuid"];
+      return ["data-uuid"];
     }
 
-    async connectedCallback() {
-      this.render();
+    connectedCallback() {
       logseq.provideStyle(sliderStyle(this.uuid));
+      this.render();
     }
 
     async render() {
@@ -36,11 +35,11 @@ export const renderSlider = (id: string) => {
         blk.content.indexOf('"}') + 2,
         blk.content.indexOf("]")
       );
-      this.innerHTML = `<input class="sliderLS" tabindex="-1" id=${id} type="range" min="0" max=${
+      this.innerHTML = `<input class="sliderLS" tabindex="-1" id=${uniqueIdentifier} type="range" min="0" max=${
         !params ? 10 : params
       } value=${rangeValue} />`;
       top?.document
-        .getElementById(id)
+        .getElementById(uniqueIdentifier)
         .addEventListener("input", async (e: any) => {
           await logseq.Editor.upsertBlockProperty(
             this.uuid,
