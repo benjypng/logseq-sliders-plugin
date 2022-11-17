@@ -1,5 +1,6 @@
 {
   "name": "logseq-sliders-plugin",
+  "effect": true,
   "version": "1.0.3",
   "description": "",
   "main": "dist/index.html",
