@@ -19,7 +19,7 @@ export const callSettings = () => {
     {
       key: "hideSliderValue",
       type: "boolean",
-      default: false,
+      default: true,
       description: "Hide values for the sliders.",
       title: "Hide sliders' value",
     },
