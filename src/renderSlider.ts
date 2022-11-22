@@ -1,41 +1,77 @@
 import { sliderStyle } from "./sliderStyle";
 
+declare global {
+  interface Window {
+    HTMLSpanElement: any;
+  }
+}
+
 export const renderSlider = (id: string) => {
-	const HTMLSpanEl = top?.HTMLSpanElement;
-	class Slider extends HTMLSpanEl {
-		constructor() {
-			console.log('element init')
-			super();
-		}
+  const HTMLSpanEl = top?.HTMLSpanElement;
+  class Slider extends HTMLSpanEl {
+    constructor() {
+      super();
+      this.width = "100%";
+      this.marginTop = "-50px";
+    }
 
-		static get observedAttributes() {
-			return ["data-uuid"];
-		}
+    static get observedAttributes() {
+      return ["data-uuid"];
+    }
 
-		connectedCallback() {
-			logseq.provideStyle(sliderStyle(this.uuid))
-			this.render();
-		}
+    get uuid() {
+      return (
+        this.getAttribute("data-uuid") ||
+        this.closest('div[id^="block-content"]')?.getAttribute("blockid") ||
+        ""
+      );
+    }
 
-		async render() {
-			const slide = top?.document.createElement('input');
-			slide!.type = "range";
-			slide!.addEventListener('input', async (e) => {
-				await logseq.Editor.upsertBlockProperty(this.uuid, "value", e.target!.value)
-			});
-			this.appendChild(slide)
-		}
+    connectedCallback() {
+      logseq.provideStyle(sliderStyle(this.uuid, id));
+      this.render();
+    }
 
-		get uuid() {
-			return (
-				this.getAttribute("data-uuid") ||
-				this.closest('div[id^="block-content"]')?.getAttribute("blockid") ||
-				""
-			);
-		}
-	}
+    async render() {
+      const savedValue = await logseq.Editor.getBlockProperty(
+        this.uuid,
+        "value"
+      );
+      // Create slider
+      const slider = top?.document.createElement("input");
+      slider!.type = "range";
+      slider!.id = `slider-${id}`;
+      slider!.value = savedValue;
 
-	top?.customElements.define(`slider-${id}`, Slider, {
-		extends: "span",
-	});
+      const value = top?.document.createElement("span");
+      value!.id = `value-${id}`;
+      if (savedValue) {
+        value!.style.visibility = "visible";
+        value!.innerHTML = savedValue;
+      } else {
+        value!.style.visibility = "hidden";
+      }
+
+      slider!.addEventListener("input", async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        value!.style.visibility = "visible";
+        value!.innerHTML = (e.target as HTMLInputElement).value;
+        await logseq.Editor.upsertBlockProperty(
+          this.uuid,
+          "value",
+          (e.target as HTMLInputElement).value
+        );
+      });
+
+      this.appendChild(slider);
+      this.appendChild(value);
+    }
+  }
+
+  if (!top?.customElements.get(`slider-${id}`)) {
+    top?.customElements.define(`slider-${id}`, Slider, {
+      extends: "span",
+    });
+  }
 };
