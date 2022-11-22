@@ -1,7 +1,7 @@
 {
   "name": "logseq-sliders-plugin",
   "effect": true,
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/index.html",
   "targets": {
@@ -15,7 +15,7 @@
   "author": "hkgnp",
   "license": "MIT",
   "dependencies": {
-    "@logseq/libs": "^0.0.1-alpha.35"
+    "@logseq/libs": "^0.0.10"
   },
   "logseq": {
     "id": "logseq-sliders-plugin",
@@ -23,6 +23,6 @@
     "icon": "./icon.svg"
   },
   "devDependencies": {
-    "parcel": "^2.5.0"
+    "parcel": "^2.8.0"
   }
 }
