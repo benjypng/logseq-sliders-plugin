@@ -18,11 +18,13 @@ function main() {
     );
   });
 
-  logseq.App.onMacroRendererSlotted(function ({ payload }) {
+  logseq.App.onMacroRendererSlotted(function ({ payload, slot }) {
     const [type] = payload.arguments;
     if (!type.startsWith(":slider_")) return;
     const id = type.split("_")[1]?.trim();
-    renderSlider(id);
+    const sliderId = `slider_${id}_${slot}`;
+
+    renderSlider(sliderId);
   });
 }
 
