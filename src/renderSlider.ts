@@ -6,7 +6,7 @@ declare global {
   }
 }
 
-export const renderSlider = (id: string) => {
+export const renderSlider = (id: string, slot: string) => {
   const HTMLSpanEl = top?.HTMLSpanElement;
   class Slider extends HTMLSpanEl {
     constructor() {
@@ -42,6 +42,7 @@ export const renderSlider = (id: string) => {
       slider!.type = "range";
       slider!.id = `slider-${id}`;
       slider!.value = savedValue;
+      slider!.setAttribute("data-slot-id", slot);
 
       const value = top?.document.createElement("span");
       value!.id = `value-${id}`;
@@ -70,6 +71,7 @@ export const renderSlider = (id: string) => {
   }
 
   if (!top?.customElements.get(`slider-${id}`)) {
+    //@ts-expect-error
     top?.customElements.define(`slider-${id}`, Slider, {
       extends: "span",
     });

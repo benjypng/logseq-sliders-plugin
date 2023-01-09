@@ -22,9 +22,8 @@ function main() {
     const [type] = payload.arguments;
     if (!type.startsWith(":slider_")) return;
     const id = type.split("_")[1]?.trim();
-    const sliderId = `slider_${id}_${slot}`;
 
-    renderSlider(sliderId);
+    renderSlider(id, slot);
   });
 }
 
