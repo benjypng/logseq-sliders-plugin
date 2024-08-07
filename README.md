@@ -8,23 +8,51 @@ This simple plugin inserts a slider into your note to serve as a great visualisa
 
 # Usage
 
-Type `/Insert slider` and that's it!
+Use the slash command `/Insert slider`. This will insert a renderer: `{{renderer :slider_66b34ab4-6daf-4c65-bc88-521751b45571, value, 1, 10}}`. The parameters available to configure are as follows:
 
-# Customising range
+- `value`: This is the default property from the plugin settings. You may either change the default property, or make it slider-specific by changing the parameter in the renderer.
+- `1`: This is the minimum value in your slider.
+- `10`: This is the maximum value in your slider.
 
-In order to customise the range of the slider, simply add a value to the end of the block where in the example below, 100 is the maximum range (default: 10).
+# Customise
 
-`[:div {:is "slider-jlvafjj"}100]`
+Override the default css below in your own `custom.css` file.
 
-# Hiding the values of the slider rangers
+```
+.slider-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+}
 
-By default, sliders will have their values shown. If you wish to hide it, simply head to the plugin settings, and check the box to hide it.
+.slider {
+  height: 0.3rem;
+  background: linear-gradient(to right, #d3d3d3, #d3d3d3),
+    repeating-linear-gradient(
+      to right,
+      #888,
+      #888 1px,
+      transparent 1px,
+      transparent 10%
+    );
+  background-size:
+    100% 100%,
+    100% 100%;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  border-radius: 12px;
+}
 
-<img src="screenshots/settings.png"  width="400"/>
+.slider:hover {
+  opacity: 1;
+}
 
-# Changing the colours of the track and the thumb
-
-In the same settings box above, you can also change the colours of the track and the thumb of your sliders.
+.slider-end {
+  font-size: 0.6rem;
+  margin: 0.5rem 0;
+}
+```
 
 # Installation
 
