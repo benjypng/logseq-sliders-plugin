@@ -1,30 +1,51 @@
-import "@logseq/libs";
-import { callSettings } from "./callSettings";
-import { renderSlider } from "./renderSlider";
+import '@logseq/libs'
 
-function main() {
-  console.log("logseq-sliders-plugin loaded");
+import css from './index.css?raw'
+import { settings } from './settings'
 
-  callSettings();
-
-  // Generate unique identifier
-  const id = Math.random()
-    .toString(36)
-    .replace(/[^a-z]+/g, "");
-
-  logseq.Editor.registerSlashCommand("Insert slider", async () => {
-    await logseq.Editor.insertAtEditingCursor(
-      `{{renderer :slider_${id}}} [:span {:is "slider-${id}"}]`
-    );
-  });
-
-  logseq.App.onMacroRendererSlotted(function ({ payload, slot }) {
-    const [type] = payload.arguments;
-    if (!type.startsWith(":slider_")) return;
-    const id = type.split("_")[1]?.trim();
-
-    renderSlider(id, slot);
-  });
+interface SliderClickEvent {
+  type: 'click'
+  value: string
+  id: string
+  className: string
+  dataset: {
+    onClick: string
+  }
 }
 
-logseq.ready(main).catch(console.error);
+const main = () => {
+  console.log('logseq-sliders-plugin loaded')
+  logseq.provideStyle(css)
+
+  logseq.Editor.registerSlashCommand('Insert slider', async (e) => {
+    await logseq.Editor.insertAtEditingCursor(
+      `{{renderer :slider_${e.uuid}, ${logseq.settings!.defaultPropertyKey}, 1, 10}}`,
+    )
+  })
+
+  logseq.App.onMacroRendererSlotted(
+    async ({ slot, payload: { uuid, arguments: args } }) => {
+      const [type, property, min, max] = args
+      if (!type || !type.startsWith(':slider_') || !property || !min || !max)
+        return
+
+      const sliderId = `slider_${uuid}_${slot}`
+      const value = await logseq.Editor.getBlockProperty(uuid, property)
+
+      logseq.provideModel({
+        async [`slide-${sliderId}`](e: SliderClickEvent) {
+          await logseq.Editor.upsertBlockProperty(uuid, property, e.value)
+        },
+      })
+
+      logseq.provideUI({
+        key: sliderId,
+        slot,
+        reset: true,
+        template: `<div class="slider-container"><div class="slider-end">${min}</div><input type="range" class="slider" id="${sliderId}" data-on-click="slide-${sliderId}" min="${min}" max="${max}" value="${value}"><div class="slider-end">${max}</div></div>`,
+      })
+    },
+  )
+}
+
+logseq.useSettingsSchema(settings).ready(main).catch(console.error)

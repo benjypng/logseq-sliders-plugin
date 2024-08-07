@@ -1,0 +1,33 @@
+.slider-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.slider {
+  height: 0.3rem;
+  background: linear-gradient(to right, #d3d3d3, #d3d3d3),
+    repeating-linear-gradient(
+      to right,
+      #888,
+      #888 1px,
+      transparent 1px,
+      transparent 10%
+    );
+  background-size:
+    100% 100%,
+    100% 100%;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  border-radius: 12px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider-end {
+  font-size: 0.6rem;
+  margin: 0.5rem 0;
+}
